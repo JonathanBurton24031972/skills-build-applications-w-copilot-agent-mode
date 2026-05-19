@@ -18,15 +18,30 @@ const Teams = () => {
       .catch(err => console.error('Error fetching teams:', err));
   }, []);
   return (
-    <div className="container mt-4">
-      <h2>Teams</h2>
-      <ul className="list-group">
-        {teams.map((team, idx) => (
-          <li className="list-group-item" key={team.id || idx}>
-            {JSON.stringify(team)}
-          </li>
-        ))}
-      </ul>
+    <div className="card shadow mb-4">
+      <div className="card-body">
+        <h2 className="card-title mb-4 text-primary">Teams</h2>
+        <div className="table-responsive">
+          <table className="table table-striped table-hover">
+            <thead className="table-dark">
+              <tr>
+                {teams[0] && Object.keys(teams[0]).map((key) => (
+                  <th key={key}>{key}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {teams.map((team, idx) => (
+                <tr key={team.id || idx}>
+                  {Object.values(team).map((val, i) => (
+                    <td key={i}>{typeof val === 'object' ? JSON.stringify(val) : val}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };
